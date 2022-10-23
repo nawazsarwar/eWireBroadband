@@ -19,7 +19,7 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-sm table-bordered table-striped table-hover ajaxTable datatable datatable-Subscriber">
+        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Subscriber">
             <thead>
                 <tr>
                     <th width="10">

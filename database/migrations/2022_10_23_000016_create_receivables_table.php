@@ -16,7 +16,8 @@ class CreateReceivablesTable extends Migration
             $table->string('username');
             $table->integer('subscriberid');
             $table->decimal('amount', 15, 2);
-            $table->integer('settled')->nullable();
+            $table->decimal('amount_received', 15, 2)->nullable();
+            $table->string('settled')->nullable();
             $table->datetime('settled_at')->nullable();
             $table->timestamps();
             $table->softDeletes();

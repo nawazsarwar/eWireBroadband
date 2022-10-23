@@ -27,7 +27,7 @@
                         {{-- Widget - latest entries --}}
                         <div class="{{ $settings3['column_class'] }}" style="overflow-x: auto;">
                             <h3>{{ $settings3['chart_title'] }}</h3>
-                            <table class="table table-sm table-bordered table-striped">
+                            <table class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         @foreach($settings3['fields'] as $key => $value)

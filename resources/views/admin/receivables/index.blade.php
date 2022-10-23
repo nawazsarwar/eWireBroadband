@@ -47,6 +47,9 @@
                         {{ trans('cruds.receivable.fields.amount') }}
                     </th>
                     <th>
+                        {{ trans('cruds.receivable.fields.amount_received') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.receivable.fields.settled') }}
                     </th>
                     <th>
@@ -118,6 +121,7 @@
 { data: 'username', name: 'username' },
 { data: 'subscriberid', name: 'subscriberid' },
 { data: 'amount', name: 'amount' },
+{ data: 'amount_received', name: 'amount_received' },
 { data: 'settled', name: 'settled' },
 { data: 'settled_by_name', name: 'settled_by.name' },
 { data: 'settled_at', name: 'settled_at' },

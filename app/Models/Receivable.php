@@ -15,6 +15,11 @@ class Receivable extends Model
     use Auditable;
     use HasFactory;
 
+    public const SETTLED_SELECT = [
+        'Yes' => 'Yes',
+        'No'  => 'No',
+    ];
+
     public $table = 'receivables';
 
     public static $searchable = [
@@ -38,6 +43,7 @@ class Receivable extends Model
         'username',
         'subscriberid',
         'amount',
+        'amount_received',
         'settled',
         'settled_by_id',
         'settled_at',
