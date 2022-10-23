@@ -87,6 +87,16 @@
                             {{ $supportTicket->user->name ?? '' }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.supportTicket.fields.assigned_to') }}
+                        </th>
+                        <td>
+                            @foreach($supportTicket->assigned_tos as $key => $assigned_to)
+                                <span class="label label-info">{{ $assigned_to->name }}</span>
+                            @endforeach
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

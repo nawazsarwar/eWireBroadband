@@ -11,8 +11,8 @@
             @method('PUT')
             @csrf
             <div class="form-group">
-                <label class="required" for="text">{{ trans('cruds.supportComment.fields.text') }}</label>
-                <input class="form-control {{ $errors->has('text') ? 'is-invalid' : '' }}" type="text" name="text" id="text" value="{{ old('text', $supportComment->text) }}" required>
+                <label for="text">{{ trans('cruds.supportComment.fields.text') }}</label>
+                <textarea class="form-control {{ $errors->has('text') ? 'is-invalid' : '' }}" name="text" id="text">{{ old('text', $supportComment->text) }}</textarea>
                 @if($errors->has('text'))
                     <span class="text-danger">{{ $errors->first('text') }}</span>
                 @endif

@@ -17,10 +17,6 @@ class StoreSupportCommentRequest extends FormRequest
     public function rules()
     {
         return [
-            'text' => [
-                'string',
-                'required',
-            ],
             'ticket_id' => [
                 'required',
                 'integer',

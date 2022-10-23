@@ -467,6 +467,8 @@ return [
             'updated_at_helper'   => ' ',
             'deleted_at'          => 'Deleted at',
             'deleted_at_helper'   => ' ',
+            'assigned_to'         => 'Assigned To',
+            'assigned_to_helper'  => ' ',
         ],
     ],
     'supportComment' => [

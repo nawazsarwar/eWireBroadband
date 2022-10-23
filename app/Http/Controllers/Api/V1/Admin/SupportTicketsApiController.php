@@ -17,12 +17,13 @@ class SupportTicketsApiController extends Controller
     {
         abort_if(Gate::denies('support_ticket_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SupportTicketResource(SupportTicket::with(['status', 'priority', 'category', 'user'])->get());
+        return new SupportTicketResource(SupportTicket::with(['status', 'priority', 'category', 'user', 'assigned_tos'])->get());
     }
 
     public function store(StoreSupportTicketRequest $request)
     {
         $supportTicket = SupportTicket::create($request->all());
+        $supportTicket->assigned_tos()->sync($request->input('assigned_tos', []));
 
         return (new SupportTicketResource($supportTicket))
             ->response()
@@ -33,12 +34,13 @@ class SupportTicketsApiController extends Controller
     {
         abort_if(Gate::denies('support_ticket_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SupportTicketResource($supportTicket->load(['status', 'priority', 'category', 'user']));
+        return new SupportTicketResource($supportTicket->load(['status', 'priority', 'category', 'user', 'assigned_tos']));
     }
 
     public function update(UpdateSupportTicketRequest $request, SupportTicket $supportTicket)
     {
         $supportTicket->update($request->all());
+        $supportTicket->assigned_tos()->sync($request->input('assigned_tos', []));
 
         return (new SupportTicketResource($supportTicket))
             ->response()
