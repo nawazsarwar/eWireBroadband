@@ -76,10 +76,18 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.receivable.fields.amount_received') }}
+                                    </th>
+                                    <td>
+                                        {{ $receivable->amount_received }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.receivable.fields.settled') }}
                                     </th>
                                     <td>
-                                        {{ $receivable->settled }}
+                                        {{ App\Models\Receivable::SETTLED_SELECT[$receivable->settled] ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>

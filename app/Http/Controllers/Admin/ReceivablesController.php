@@ -63,8 +63,11 @@ class ReceivablesController extends Controller
             $table->editColumn('amount', function ($row) {
                 return $row->amount ? $row->amount : '';
             });
+            $table->editColumn('amount_received', function ($row) {
+                return $row->amount_received ? $row->amount_received : '';
+            });
             $table->editColumn('settled', function ($row) {
-                return $row->settled ? $row->settled : '';
+                return $row->settled ? Receivable::SETTLED_SELECT[$row->settled] : '';
             });
             $table->addColumn('settled_by_name', function ($row) {
                 return $row->settled_by ? $row->settled_by->name : '';

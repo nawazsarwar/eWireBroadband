@@ -59,8 +59,21 @@
                 <span class="help-block">{{ trans('cruds.receivable.fields.amount_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="settled">{{ trans('cruds.receivable.fields.settled') }}</label>
-                <input class="form-control {{ $errors->has('settled') ? 'is-invalid' : '' }}" type="number" name="settled" id="settled" value="{{ old('settled', $receivable->settled) }}" step="1">
+                <label for="amount_received">{{ trans('cruds.receivable.fields.amount_received') }}</label>
+                <input class="form-control {{ $errors->has('amount_received') ? 'is-invalid' : '' }}" type="number" name="amount_received" id="amount_received" value="{{ old('amount_received', $receivable->amount_received) }}" step="0.01">
+                @if($errors->has('amount_received'))
+                    <span class="text-danger">{{ $errors->first('amount_received') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.receivable.fields.amount_received_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label>{{ trans('cruds.receivable.fields.settled') }}</label>
+                <select class="form-control {{ $errors->has('settled') ? 'is-invalid' : '' }}" name="settled" id="settled">
+                    <option value disabled {{ old('settled', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                    @foreach(App\Models\Receivable::SETTLED_SELECT as $key => $label)
+                        <option value="{{ $key }}" {{ old('settled', $receivable->settled) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                    @endforeach
+                </select>
                 @if($errors->has('settled'))
                     <span class="text-danger">{{ $errors->first('settled') }}</span>
                 @endif

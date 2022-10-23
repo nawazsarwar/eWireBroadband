@@ -40,12 +40,6 @@ class StoreReceivableRequest extends FormRequest
             'amount' => [
                 'required',
             ],
-            'settled' => [
-                'nullable',
-                'integer',
-                'min:-2147483648',
-                'max:2147483647',
-            ],
             'settled_at' => [
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 'nullable',
