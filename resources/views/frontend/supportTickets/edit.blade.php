@@ -25,7 +25,7 @@
                         </div>
                         <div class="form-group">
                             <label for="content">{{ trans('cruds.supportTicket.fields.content') }}</label>
-                            <input class="form-control" type="text" name="content" id="content" value="{{ old('content', $supportTicket->content) }}">
+                            <textarea class="form-control" name="content" id="content">{{ old('content', $supportTicket->content) }}</textarea>
                             @if($errors->has('content'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('content') }}
@@ -108,6 +108,24 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.supportTicket.fields.user_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="assigned_tos">{{ trans('cruds.supportTicket.fields.assigned_to') }}</label>
+                            <div style="padding-bottom: 4px">
+                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                            </div>
+                            <select class="form-control select2" name="assigned_tos[]" id="assigned_tos" multiple>
+                                @foreach($assigned_tos as $id => $assigned_to)
+                                    <option value="{{ $id }}" {{ (in_array($id, old('assigned_tos', [])) || $supportTicket->assigned_tos->contains($id)) ? 'selected' : '' }}>{{ $assigned_to }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('assigned_tos'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('assigned_tos') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.supportTicket.fields.assigned_to_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">

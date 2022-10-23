@@ -49,6 +49,9 @@
                         {{ trans('cruds.supportTicket.fields.user') }}
                     </th>
                     <th>
+                        {{ trans('cruds.supportTicket.fields.assigned_to') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -113,6 +116,7 @@
 { data: 'priority_name', name: 'priority.name' },
 { data: 'category_name', name: 'category.name' },
 { data: 'user_name', name: 'user.name' },
+{ data: 'assigned_to', name: 'assigned_tos.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

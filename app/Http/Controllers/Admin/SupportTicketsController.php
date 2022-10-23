@@ -23,7 +23,7 @@ class SupportTicketsController extends Controller
         abort_if(Gate::denies('support_ticket_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = SupportTicket::with(['status', 'priority', 'category', 'user'])->select(sprintf('%s.*', (new SupportTicket())->table));
+            $query = SupportTicket::with(['status', 'priority', 'category', 'user', 'assigned_tos'])->select(sprintf('%s.*', (new SupportTicket())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -75,7 +75,16 @@ class SupportTicketsController extends Controller
                 return $row->user ? $row->user->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'status', 'priority', 'category', 'user']);
+            $table->editColumn('assigned_to', function ($row) {
+                $labels = [];
+                foreach ($row->assigned_tos as $assigned_to) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $assigned_to->name);
+                }
+
+                return implode(' ', $labels);
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'status', 'priority', 'category', 'user', 'assigned_to']);
 
             return $table->make(true);
         }
@@ -95,12 +104,15 @@ class SupportTicketsController extends Controller
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.supportTickets.create', compact('categories', 'priorities', 'statuses', 'users'));
+        $assigned_tos = User::pluck('name', 'id');
+
+        return view('admin.supportTickets.create', compact('assigned_tos', 'categories', 'priorities', 'statuses', 'users'));
     }
 
     public function store(StoreSupportTicketRequest $request)
     {
         $supportTicket = SupportTicket::create($request->all());
+        $supportTicket->assigned_tos()->sync($request->input('assigned_tos', []));
 
         return redirect()->route('admin.support-tickets.index');
     }
@@ -117,14 +129,17 @@ class SupportTicketsController extends Controller
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $supportTicket->load('status', 'priority', 'category', 'user');
+        $assigned_tos = User::pluck('name', 'id');
 
-        return view('admin.supportTickets.edit', compact('categories', 'priorities', 'statuses', 'supportTicket', 'users'));
+        $supportTicket->load('status', 'priority', 'category', 'user', 'assigned_tos');
+
+        return view('admin.supportTickets.edit', compact('assigned_tos', 'categories', 'priorities', 'statuses', 'supportTicket', 'users'));
     }
 
     public function update(UpdateSupportTicketRequest $request, SupportTicket $supportTicket)
     {
         $supportTicket->update($request->all());
+        $supportTicket->assigned_tos()->sync($request->input('assigned_tos', []));
 
         return redirect()->route('admin.support-tickets.index');
     }
@@ -133,7 +148,7 @@ class SupportTicketsController extends Controller
     {
         abort_if(Gate::denies('support_ticket_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $supportTicket->load('status', 'priority', 'category', 'user');
+        $supportTicket->load('status', 'priority', 'category', 'user', 'assigned_tos');
 
         return view('admin.supportTickets.show', compact('supportTicket'));
     }

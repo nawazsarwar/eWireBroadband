@@ -21,13 +21,15 @@ class StoreSupportTicketRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'content' => [
-                'string',
-                'nullable',
-            ],
             'auther_name' => [
                 'string',
                 'nullable',
+            ],
+            'assigned_tos.*' => [
+                'integer',
+            ],
+            'assigned_tos' => [
+                'array',
             ],
         ];
     }

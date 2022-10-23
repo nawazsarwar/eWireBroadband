@@ -10,7 +10,7 @@ class CreateSupportCommentsTable extends Migration
     {
         Schema::create('support_comments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('text');
+            $table->longText('text')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -11,7 +11,7 @@ class CreateSupportTicketsTable extends Migration
         Schema::create('support_tickets', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-            $table->string('content')->nullable();
+            $table->longText('content')->nullable();
             $table->string('auther_name')->nullable();
             $table->string('author_email')->nullable();
             $table->timestamps();

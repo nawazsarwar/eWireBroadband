@@ -21,7 +21,7 @@ class SupportTicketsController extends Controller
     {
         abort_if(Gate::denies('support_ticket_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $supportTickets = SupportTicket::with(['status', 'priority', 'category', 'user'])->get();
+        $supportTickets = SupportTicket::with(['status', 'priority', 'category', 'user', 'assigned_tos'])->get();
 
         return view('frontend.supportTickets.index', compact('supportTickets'));
     }
@@ -38,12 +38,15 @@ class SupportTicketsController extends Controller
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.supportTickets.create', compact('categories', 'priorities', 'statuses', 'users'));
+        $assigned_tos = User::pluck('name', 'id');
+
+        return view('frontend.supportTickets.create', compact('assigned_tos', 'categories', 'priorities', 'statuses', 'users'));
     }
 
     public function store(StoreSupportTicketRequest $request)
     {
         $supportTicket = SupportTicket::create($request->all());
+        $supportTicket->assigned_tos()->sync($request->input('assigned_tos', []));
 
         return redirect()->route('frontend.support-tickets.index');
     }
@@ -60,14 +63,17 @@ class SupportTicketsController extends Controller
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $supportTicket->load('status', 'priority', 'category', 'user');
+        $assigned_tos = User::pluck('name', 'id');
 
-        return view('frontend.supportTickets.edit', compact('categories', 'priorities', 'statuses', 'supportTicket', 'users'));
+        $supportTicket->load('status', 'priority', 'category', 'user', 'assigned_tos');
+
+        return view('frontend.supportTickets.edit', compact('assigned_tos', 'categories', 'priorities', 'statuses', 'supportTicket', 'users'));
     }
 
     public function update(UpdateSupportTicketRequest $request, SupportTicket $supportTicket)
     {
         $supportTicket->update($request->all());
+        $supportTicket->assigned_tos()->sync($request->input('assigned_tos', []));
 
         return redirect()->route('frontend.support-tickets.index');
     }
@@ -76,7 +82,7 @@ class SupportTicketsController extends Controller
     {
         abort_if(Gate::denies('support_ticket_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $supportTicket->load('status', 'priority', 'category', 'user');
+        $supportTicket->load('status', 'priority', 'category', 'user', 'assigned_tos');
 
         return view('frontend.supportTickets.show', compact('supportTicket'));
     }

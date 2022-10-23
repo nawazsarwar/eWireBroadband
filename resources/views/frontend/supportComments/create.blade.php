@@ -14,8 +14,8 @@
                         @method('POST')
                         @csrf
                         <div class="form-group">
-                            <label class="required" for="text">{{ trans('cruds.supportComment.fields.text') }}</label>
-                            <input class="form-control" type="text" name="text" id="text" value="{{ old('text', '') }}" required>
+                            <label for="text">{{ trans('cruds.supportComment.fields.text') }}</label>
+                            <textarea class="form-control" name="text" id="text">{{ old('text') }}</textarea>
                             @if($errors->has('text'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('text') }}

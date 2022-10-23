@@ -50,6 +50,9 @@
                                         {{ trans('cruds.supportTicket.fields.user') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.supportTicket.fields.assigned_to') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -83,6 +86,11 @@
                                         </td>
                                         <td>
                                             {{ $supportTicket->user->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            @foreach($supportTicket->assigned_tos as $key => $item)
+                                                <span>{{ $item->name }}</span>
+                                            @endforeach
                                         </td>
                                         <td>
                                             @can('support_ticket_show')
