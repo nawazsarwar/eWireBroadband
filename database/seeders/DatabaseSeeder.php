@@ -15,6 +15,9 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             RoleUserTableSeeder::class,
             AssetStatusTableSeeder::class,
+            SupportStatusTableSeeder::class,
+            SupportPriorityTableSeeder::class,
+            SupportCategoryTableSeeder::class,
         ]);
     }
 }
