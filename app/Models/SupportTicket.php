@@ -56,6 +56,11 @@ class SupportTicket extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function comments()
+    {
+        return $this->hasMany(SupportComment::class, 'ticket_id');
+    }
+
     public function assigned_tos()
     {
         return $this->belongsToMany(User::class);

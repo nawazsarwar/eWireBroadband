@@ -9,6 +9,7 @@
     <div class="card-body">
         <form method="POST" action="{{ route("admin.support-tickets.store") }}" enctype="multipart/form-data">
             @csrf
+
             <div class="form-group">
                 <label class="required" for="title">{{ trans('cruds.supportTicket.fields.title') }}</label>
                 <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text" name="title" id="title" value="{{ old('title', '') }}" required>
@@ -17,6 +18,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.supportTicket.fields.title_helper') }}</span>
             </div>
+
             <div class="form-group">
                 <label for="content">{{ trans('cruds.supportTicket.fields.content') }}</label>
                 <textarea class="form-control {{ $errors->has('content') ? 'is-invalid' : '' }}" name="content" id="content">{{ old('content') }}</textarea>
@@ -25,70 +27,81 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.supportTicket.fields.content_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="auther_name">{{ trans('cruds.supportTicket.fields.auther_name') }}</label>
-                <input class="form-control {{ $errors->has('auther_name') ? 'is-invalid' : '' }}" type="text" name="auther_name" id="auther_name" value="{{ old('auther_name', '') }}">
-                @if($errors->has('auther_name'))
-                    <span class="text-danger">{{ $errors->first('auther_name') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.supportTicket.fields.auther_name_helper') }}</span>
+
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label for="auther_name">{{ trans('cruds.supportTicket.fields.auther_name') }}</label>
+                    <input class="form-control {{ $errors->has('auther_name') ? 'is-invalid' : '' }}" type="text" name="auther_name" id="auther_name" value="@auth{{ auth()->user()->name }}@endauth">
+                    @if($errors->has('auther_name'))
+                        <span class="text-danger">{{ $errors->first('auther_name') }}</span>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.supportTicket.fields.auther_name_helper') }}</span>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="author_email">{{ trans('cruds.supportTicket.fields.author_email') }}</label>
+                    <input class="form-control {{ $errors->has('author_email') ? 'is-invalid' : '' }}" type="email" name="author_email" id="author_email" value="@auth {{ auth()->user()->email }} @endauth">
+                    @if($errors->has('author_email'))
+                        <span class="text-danger">{{ $errors->first('author_email') }}</span>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.supportTicket.fields.author_email_helper') }}</span>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="user_id">{{ trans('cruds.supportTicket.fields.user') }}</label>
+                    <select class="form-control select2 {{ $errors->has('user') ? 'is-invalid' : '' }}" name="user_id" id="user_id">
+                        @foreach($users as $id => $entry)
+                            <option value="{{ $id }}" {{ old('user_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('user'))
+                        <span class="text-danger">{{ $errors->first('user') }}</span>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.supportTicket.fields.user_helper') }}</span>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="author_email">{{ trans('cruds.supportTicket.fields.author_email') }}</label>
-                <input class="form-control {{ $errors->has('author_email') ? 'is-invalid' : '' }}" type="email" name="author_email" id="author_email" value="{{ old('author_email') }}">
-                @if($errors->has('author_email'))
-                    <span class="text-danger">{{ $errors->first('author_email') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.supportTicket.fields.author_email_helper') }}</span>
+
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label for="priority_id">{{ trans('cruds.supportTicket.fields.priority') }}</label>
+                    <select class="form-control select2 {{ $errors->has('priority') ? 'is-invalid' : '' }}" name="priority_id" id="priority_id">
+                        @foreach($priorities as $id => $entry)
+                            <option value="{{ $id }}" {{ old('priority_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('priority'))
+                        <span class="text-danger">{{ $errors->first('priority') }}</span>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.supportTicket.fields.priority_helper') }}</span>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="category_id">{{ trans('cruds.supportTicket.fields.category') }}</label>
+                    <select class="form-control select2 {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id">
+                        @foreach($categories as $id => $entry)
+                            <option value="{{ $id }}" {{ old('category_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('category'))
+                        <span class="text-danger">{{ $errors->first('category') }}</span>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.supportTicket.fields.category_helper') }}</span>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="status_id">{{ trans('cruds.supportTicket.fields.status') }}</label>
+                    <select class="form-control select2 {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status_id" id="status_id">
+                        @foreach($statuses as $id => $entry)
+                            <option value="{{ $id }}" {{ old('status_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('status'))
+                        <span class="text-danger">{{ $errors->first('status') }}</span>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.supportTicket.fields.status_helper') }}</span>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="status_id">{{ trans('cruds.supportTicket.fields.status') }}</label>
-                <select class="form-control select2 {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status_id" id="status_id">
-                    @foreach($statuses as $id => $entry)
-                        <option value="{{ $id }}" {{ old('status_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('status'))
-                    <span class="text-danger">{{ $errors->first('status') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.supportTicket.fields.status_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="priority_id">{{ trans('cruds.supportTicket.fields.priority') }}</label>
-                <select class="form-control select2 {{ $errors->has('priority') ? 'is-invalid' : '' }}" name="priority_id" id="priority_id">
-                    @foreach($priorities as $id => $entry)
-                        <option value="{{ $id }}" {{ old('priority_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('priority'))
-                    <span class="text-danger">{{ $errors->first('priority') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.supportTicket.fields.priority_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="category_id">{{ trans('cruds.supportTicket.fields.category') }}</label>
-                <select class="form-control select2 {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id">
-                    @foreach($categories as $id => $entry)
-                        <option value="{{ $id }}" {{ old('category_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('category'))
-                    <span class="text-danger">{{ $errors->first('category') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.supportTicket.fields.category_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="user_id">{{ trans('cruds.supportTicket.fields.user') }}</label>
-                <select class="form-control select2 {{ $errors->has('user') ? 'is-invalid' : '' }}" name="user_id" id="user_id">
-                    @foreach($users as $id => $entry)
-                        <option value="{{ $id }}" {{ old('user_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('user'))
-                    <span class="text-danger">{{ $errors->first('user') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.supportTicket.fields.user_helper') }}</span>
-            </div>
+
             <div class="form-group">
                 <label for="assigned_tos">{{ trans('cruds.supportTicket.fields.assigned_to') }}</label>
                 <div style="padding-bottom: 4px">

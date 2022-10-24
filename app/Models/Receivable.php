@@ -81,4 +81,9 @@ class Receivable extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+    public function subscriber()
+    {
+        return $this->belongsTo(Subscriber::class, 'username', 'username');
+    }
 }

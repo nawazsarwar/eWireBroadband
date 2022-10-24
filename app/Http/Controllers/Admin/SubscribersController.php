@@ -74,13 +74,17 @@ class SubscribersController extends Controller
             $table->editColumn('photo', function ($row) {
                 if ($photo = $row->photo) {
                     return sprintf(
-        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
-        $photo->url,
-        $photo->thumbnail
-    );
+                        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
+                        $photo->url,
+                        $photo->thumbnail
+                    );
                 }
 
                 return '';
+            });
+
+            $table->editColumn('location', function ($row) {
+                return $row->location ? $row->location : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'photo']);
@@ -116,7 +120,6 @@ class SubscribersController extends Controller
     public function edit(Subscriber $subscriber)
     {
         abort_if(Gate::denies('subscriber_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         return view('admin.subscribers.edit', compact('subscriber'));
     }
 
@@ -141,7 +144,6 @@ class SubscribersController extends Controller
     public function show(Subscriber $subscriber)
     {
         abort_if(Gate::denies('subscriber_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         return view('admin.subscribers.show', compact('subscriber'));
     }
 

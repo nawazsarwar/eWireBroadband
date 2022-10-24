@@ -79,7 +79,8 @@ class SupportCommentsController extends Controller
     {
         $supportComment = SupportComment::create($request->all());
 
-        return redirect()->route('admin.support-comments.index');
+        // return redirect()->route('admin.support-comments.index');
+        return redirect()->back();
     }
 
     public function edit(SupportComment $supportComment)

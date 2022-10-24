@@ -12,11 +12,33 @@ class UsersTableSeeder extends Seeder
         $users = [
             [
                 'id'             => 1,
-                'name'           => 'Admin',
-                'email'          => 'admin@admin.com',
+                'username'       => 'administrator',
+                'name'           => 'Administrator',
+                'email'          => 'intelsharp@gmail.com',
                 'password'       => bcrypt('password'),
                 'remember_token' => null,
-                'username'       => '',
+                'created_at'    => now(),
+                'updated_at'    => now(),
+            ],
+            [
+                'id'             => 2,
+                'username'       => 'sultan',
+                'name'           => 'Sultan',
+                'email'          => 'sultan@intelsharp.com',
+                'password'       => bcrypt('password'),
+                'remember_token' => null,
+                'created_at'    => now(),
+                'updated_at'    => now(),
+            ],
+            [
+                'id'             => 3,
+                'username'       => 'anjali',
+                'name'           => 'Anjali Gautam',
+                'email'          => 'anjali@intelsharp.com',
+                'password'       => bcrypt('password'),
+                'remember_token' => null,
+                'created_at'    => now(),
+                'updated_at'    => now(),
             ],
         ];
 

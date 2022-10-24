@@ -24,5 +24,7 @@ class SupportCategoryTableSeeder extends Seeder
                 'updated_at'    => now(),
             ],
         ];
+
+        SupportCategory::insert( $categories );
     }
 }

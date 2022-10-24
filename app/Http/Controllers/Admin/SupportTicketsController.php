@@ -64,7 +64,7 @@ class SupportTicketsController extends Controller
             });
 
             $table->addColumn('priority_name', function ($row) {
-                return $row->priority ? $row->priority->name : '';
+                return sprintf('<span class="text-lg badge badge-'. $row->priority->color . '">%s</span>', $row->priority->name);
             });
 
             $table->addColumn('category_name', function ($row) {
@@ -84,7 +84,7 @@ class SupportTicketsController extends Controller
                 return implode(' ', $labels);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'status', 'priority', 'category', 'user', 'assigned_to']);
+            $table->rawColumns(['actions', 'placeholder', 'status', 'priority', 'priority_name', 'category', 'user', 'assigned_to']);
 
             return $table->make(true);
         }

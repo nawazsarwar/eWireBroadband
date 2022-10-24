@@ -91,6 +91,11 @@ class UpdateSubscriberRequest extends FormRequest
                 'max:20',
                 'required',
             ],
+            'location' => [
+                'string',
+                'max:50',
+                'required',
+            ],
         ];
     }
 }

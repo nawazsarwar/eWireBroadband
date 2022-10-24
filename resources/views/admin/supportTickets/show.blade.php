@@ -13,7 +13,7 @@
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
-            <table class="table table-bordered table-striped">
+            <table class="table table-sm table-show table-bordered table-striped">
                 <tbody>
                     <tr>
                         <th>
@@ -68,7 +68,7 @@
                             {{ trans('cruds.supportTicket.fields.priority') }}
                         </th>
                         <td>
-                            {{ $supportTicket->priority->name ?? '' }}
+                            <span class="text-lg badge badge-{{ $supportTicket->priority->color ?? '' }}">{{ $supportTicket->priority->name ?? '' }}</span>
                         </td>
                     </tr>
                     <tr>
@@ -99,10 +99,49 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <a class="btn btn-default" href="{{ route('admin.support-tickets.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+            </div> --}}
+        </div>
+
+        <div class="row">
+            @foreach ( $supportTicket->comments as $comment)
+                <div class="col-md-12">
+                    <div class="card @if( $comment->user->id == auth()->id() ) float-right text-white bg-success @else float-left text-white bg-primary @endif">
+                        <div class="card-body pt-1 pb-1">
+                            {{ $comment->user->name }}: <span class="text-bold">{!! $comment->text !!}</span><br>
+                            <small class="font-italic font-weight-light">{{ $comment->created_at }}</small>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <form method="POST" action="{{ route("admin.support-comments.store") }}" enctype="multipart/form-data">
+                    @csrf
+
+                    <input type="hidden" name="ticket_id" value="{{ $supportTicket->id }}">
+                    <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+
+                    <div class="form-group">
+                        <label for="text">{{ trans('cruds.supportComment.fields.text') }}</label>
+                        <textarea class="form-control {{ $errors->has('text') ? 'is-invalid' : '' }}" name="text" id="text">{{ old('text') }}</textarea>
+                        @if($errors->has('text'))
+                            <span class="text-danger">{{ $errors->first('text') }}</span>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.supportComment.fields.text_helper') }}</span>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-danger" type="submit">
+                            {{ trans('global.save') }}
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

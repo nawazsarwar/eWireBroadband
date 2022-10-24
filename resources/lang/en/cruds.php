@@ -307,6 +307,8 @@ return [
             'balance_helper'             => ' ',
             'sub_status'                 => 'Sub Status',
             'sub_status_helper'          => ' ',
+            'location'                   => 'Location',
+            'location_helper'            => ' ',
             'remarks'                    => 'Remarks',
             'remarks_helper'             => ' ',
             'photo'                      => 'Photo',

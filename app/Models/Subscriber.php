@@ -107,4 +107,9 @@ class Subscriber extends Model implements HasMedia
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+    public function receivables()
+    {
+        return $this->hasMany(Receivable::class, 'username', 'username');
+    }
 }

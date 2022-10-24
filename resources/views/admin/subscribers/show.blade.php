@@ -13,7 +13,7 @@
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
-            <table class="table table-bordered table-striped">
+            <table class="table table-sm table-bordered table-striped">
                 <tbody>
                     <tr>
                         <th>
@@ -161,6 +161,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.subscriber.fields.location') }}
+                        </th>
+                        <td>
+                            {{ $subscriber->location }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.subscriber.fields.photo') }}
                         </th>
                         <td>
@@ -179,6 +187,52 @@
                 </a>
             </div>
         </div>
+
+        <table class="table table-sm table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        {{ trans('cruds.receivable.fields.financeref') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.receivable.fields.lastupdate') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.receivable.fields.description') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.receivable.fields.amount') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.receivable.fields.amount_received') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.receivable.fields.settled') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.receivable.fields.settled_by') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.receivable.fields.settled_at') }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($subscriber->receivables as $receivable)
+                    <tr>
+                        <td>{{ $receivable->financeref }}</td>
+                        <td>{{ $receivable->lastupdate }}</td>
+                        <td>{{ $receivable->description }}</td>
+                        <td>{{ $receivable->amount }}</td>
+                        <td>{{ $receivable->amount_received }}</td>
+                        <td>{{ $receivable->settled }}</td>
+                        <td>{{ $receivable->settled_by }}</td>
+                        <td>{{ $receivable->settled_at }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
     </div>
 </div>
 
